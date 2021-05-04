@@ -1,0 +1,1 @@
+cat CompanyBase_input.json | ./dri.rb
