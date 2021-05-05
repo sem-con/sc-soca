@@ -3,12 +3,12 @@
     "@version": 1.1,    
     "@import": "https://ns.ownyourdata.eu/ns/soca-context.json",
     "@base": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/",
-    "Company": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/Company",
-    "LegalName": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/LegalName",
-    "Address": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/Address",
-    "ZipCode": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/ipCode",
-    "City": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/City",
-    "Country": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/Country"
+    "Company": "base:Company",
+    "LegalName": "base:LegalName",
+    "Address": "base:Address",
+    "ZipCode": "base:ZipCode",
+    "City": "base:City",
+    "Country": "base:Country"
   },
   "@graph": [
     { "@id": "Company", "subClassOf": "soca:Base" },
