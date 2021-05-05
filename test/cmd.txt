@@ -1,1 +1,102 @@
 cat CompanyBase_input.json | ./dri.rb
+
+docker run -d --name soca -p 4000:3000 semcon/sc-soca
+
+# Company Base
+echo '[{
+  "content": {
+  "@context": {
+    "@version": 1.1,    
+    "@import": "https://ns.ownyourdata.eu/ns/soca-context.json",
+    "@base": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/",
+    "Company": "base:Company",
+    "LegalName": "base:LegalName",
+    "Address": "base:Address",
+    "ZipCode": "base:ZipCode",
+    "City": "base:City",
+    "Country": "base:Country"
+  },
+  "@graph": [
+    { "@id": "Company", "subClassOf": "soca:Base" },
+    { "@id": "LegalName", "@type": "owl:DatatypeProperty", "domain": "Company", "range": "xsd:string" },
+    { "@id": "Address", "@type": "owl:DatatypeProperty", "domain": "Company", "range": "xsd:string" },
+    { "@id": "ZipCode", "@type": "owl:DatatypeProperty", "domain": "Company", "range": "xsd:string" },
+    { "@id": "City", "@type": "owl:DatatypeProperty", "domain": "Company", "range": "xsd:string" },
+    { "@id": "Country", "@type": "owl:DatatypeProperty", "domain": "Company", "range": "xsd:string" }
+  ]
+},
+  "schema_dri": "zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29"
+}]' | curl -H "Content-Type: application/json" -d @- \
+    -X POST https://soca.data-container.net/api/data
+
+# Company Overlay
+echo '[{
+  "content": {
+  "@context": {
+    "@version": 1.1,
+    "@import": "https://ns.ownyourdata.eu/ns/soca-context.json",
+    "@base": "https://soca.data-container.net/zQmRe6ZmxUETY2rm8Dg9CNBcdBh8kqe9aqeoXnfigAUKtuP/",
+    "company": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/"
+  },
+  "@graph": [
+    { "@id": "OverlayLabel", "@type": "OverlayLabel", "onBase": "company:Company" },
+    { "@id": "company:LegalName", "label": { "en": "Legal Name", "de": "Gesetzlicher Name" } },
+    { "@id": "company:Address", "label": { "en": "Address", "de": "Adresse" } },
+    { "@id": "company:ZipCode", "label": { "en": "Zip Code", "de": "Postleitzahl" } },
+    { "@id": "company:City", "label": { "en": "City", "de": "Stadt" } },
+    { "@id": "company:Country", "label": { "en": "Country", "de": "Land" } }
+  ]
+},
+  "schema_dri": "zQmRe6ZmxUETY2rm8Dg9CNBcdBh8kqe9aqeoXnfigAUKtuP"
+}]' | curl -H "Content-Type: application/json" -d @- \
+    -X POST https://soca.data-container.net/api/data
+
+# Person Base
+echo '[{
+  "content": {
+  "@context": {
+    "@version": 1.1,    
+    "@import": "https://ns.ownyourdata.eu/ns/soca-context.json",
+    "@base": "https://soca.data-container.net/zQmXNXuVa7yQkHhA89xPLA8bnkpQA77d9sURBJWkQgTJmyn/",
+    "Person": "base:Person",
+    "FirstName": "base:FirstName",
+    "LastName": "base:LastName",
+    "Gender": "base:Gender",
+    "DateOfBirth": "base:DateOfBirth",
+    "Employer": "base:Employer"
+  },
+  "@graph": [
+    { "@id": "", "import": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/" },
+    { "@id": "Person", "subClassOf": "Base" },
+    { "@id": "FirstName", "@type": "owl:DatatypeProperty", "domain": "Person", "range": "xsd:string" },
+    { "@id": "LastName", "@type": "owl:DatatypeProperty", "domain": "Person", "range": "xsd:string" },
+    { "@id": "Gender", "@type": "owl:DatatypeProperty", "domain": "Person", "range": "xsd:string" },
+    { "@id": "DateOfBirth", "@type": "owl:DatatypeProperty", "domain": "Person", "range": "xsd:string" },
+    { "@id": "Employer", "@type": "owl:ObjectProperty", "domain": "Person", 
+             "range": "https://soca.data-container.net/zQmTJCXJo54739GMGtgVjteppudStrheLvNKDUSterAYk29/Company" }
+  ]
+},
+  "schema_dri": "zQmXNXuVa7yQkHhA89xPLA8bnkpQA77d9sURBJWkQgTJmyn"
+}]' | curl -H "Content-Type: application/json" -d @- \
+    -X POST https://soca.data-container.net/api/data
+
+# Person Overlay
+echo '[{
+  "content": {  
+  "@context": {
+    "@version": 1.1,
+    "@import": "https://ns.ownyourdata.eu/ns/soca-context.json",
+    "@base": "https://soca.data-container.net/zQmWsC1QviyDAAfm99JZn74hRwKxoR3L56g4jCykDTPTyaG/"
+  },
+  "@graph": [
+    { "@id": "OverlayLabel", "@type": "OverlayLabel", "onBase": "https://soca.data-container.net/zQmXNXuVa7yQkHhA89xPLA8bnkpQA77d9sURBJWkQgTJmyn/Person" },
+    { "@id": "FirstName", "label": { "en": "First Name", "de": "Vorname" } },
+    { "@id": "LastName", "label": { "en": "Last Name", "de": "Nachname" } },
+    { "@id": "Gender", "label": { "en": "Gender", "de": "Geschlecht" } },
+    { "@id": "DateOfBirth", "label": { "en": "Date Of Birth", "de": "Geburtsdatum" } },
+    { "@id": "Employer", "label": { "en": "Employer", "de": "Arbeitgeber" } }
+  ]
+},
+  "schema_dri": "zQmWsC1QviyDAAfm99JZn74hRwKxoR3L56g4jCykDTPTyaG"
+}]' | curl -H "Content-Type: application/json" -d @- \
+    -X POST https://soca.data-container.net/api/data
